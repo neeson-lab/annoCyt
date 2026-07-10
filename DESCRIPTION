@@ -1,0 +1,41 @@
+Package: annoCyt
+Type: Package
+Title: Hierarchical Annotation of High-Dimensional Cytometry Data
+Version: 0.1.0
+Authors@R: 
+    c(person("Stefanie", "Navaratnam", "snavaratnam@ccia.org.au", role = c("aut", "cre")),
+    person("Niko", "Thio", email = "niko.thio@petermac.org", role = "aut"))
+Description: This package provides tools to analyse high-dimensional cytometry data including clustering, annotation, differential abundance testing and visualisations. 
+        For the annotation step, you provide the cell types you want to find and specify rules of how to find them, and annoCyt will do the rest. 
+        Preceding clustering steps are offered for a seamless workflow. 
+Encoding: UTF-8
+RoxygenNote: 7.3.3
+Imports: 
+    CATALYST,
+    circlize,
+    ComplexHeatmap,
+    dplyr,
+    flowCore,
+    forcats,
+    ggplot2,
+    ggraph,
+    grDevices,
+    grid,
+    GSEABase,
+    igraph,
+    ncdfFlow,
+    RColorBrewer,
+    reshape2,
+    rlang,
+    S4Vectors,
+    SingleCellExperiment,
+    singscore,
+    stats,
+    stringr,
+    SummarizedExperiment,
+    tibble,
+    tidyr
+License: MIT + file LICENSE
+Depends: 
+    R (>= 3.5)
+LazyData: true

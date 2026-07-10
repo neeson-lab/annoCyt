@@ -282,7 +282,6 @@ annotation logic.
 
 <figure>
 <img src="images/tree.png" alt="Workflow" />
-<figcaption aria-hidden="true">Workflow</figcaption>
 </figure>
 
 ### Step 2: Define the markers for each cell type
@@ -300,8 +299,11 @@ express the same markers, it will not work very well. These additional
 markers can help confirm if the annotation is correct but it is best not
 to include them right now (they can be included/used later!)
 
-For example: •     Immune cell: CD45+ •     T cell: CD3+ •     NK: CD56+
-CD3- Note that while T cells and NKs are CD45+, we don’t need to specify
+For example: 
+* Immune cell: CD45+ 
+* T cell: CD3+ 
+* NK: CD56+ CD3- 
+Note that while T cells and NKs are CD45+, we don’t need to specify
 CD45 explicitly because they are a subtype of immune cells.
 
 ### Step 3: Define the rules for how to call each cell type
@@ -313,32 +315,35 @@ cell type (based on the markers that define it, the marker’s expression,
 which markers are most highly expressed in the cluster, etc). That is,
 we need to define the rules for how to call each cell type.
 
-Here is an explanation of the possible rules: •     If expression of
-relevant markers is higher/lower in a cluster compared to other clusters
-o     Some clusters will have high CD56, while others will have low
-CD56. We can use this logic to find NK cells o     Note: We use the
-scaled expression values to compare expression across clusters. We will
+Here is an explanation of the possible rules: 
+* If expression of relevant markers is higher/lower in a cluster compared to other clusters
+  * Some clusters will have high CD56, while others will have low
+CD56. We can use this logic to find NK cells 
+  * Note: We use the scaled expression values to compare expression across clusters. We will
 also set a threshold to demarcate high and low expression. This is
 similar to drawing the box when gating.  
-•     If expression of relevant markers is more extreme compared to
-other markers in the same cluster o     Eg, a cluster with high levels
-of CD56 but low levels of CD3 is probably an NK cell o     To determine
+* If expression of relevant markers is more extreme compared to
+other markers in the same cluster 
+  * Eg, a cluster with high levels
+of CD56 but low levels of CD3 is probably an NK cell 
+  * To determine
 what markers are high and low within a cluster, we use a scoring method
 called ‘singscore’. Singscore ranks the expression of every marker
 within a cluster. After we define which markers are important for each
 cell type, it will use the ranking to generate a likelihood score that
-represents how likely a cluster is to be a certain cell type. o     We
-will also need to set a threshold for the singscore to demarcate high
+represents how likely a cluster is to be a certain cell type. 
+  * We will also need to set a threshold for the singscore to demarcate high
 and low scores. 0 is the lowest recommended threshold. We will generate
 a singscore “score” for almost every cell type you’re interested in,
-plus some special cases. •     Similarly, there may multiple possible
-subtypes that a cluster could be (eg, once we have determined something
+plus some special cases. 
+* Similarly, there may multiple possible subtypes that a cluster could be (eg, once we have determined something
 is a T cell, it could then be a CD4 or CD8 T cell). We can check the CD4
 singscore and CD8 score to see which one is higher. In annoCyt, I’ve
-called this process finding the “max” •     If a cluster is not defined
+called this process finding the “max”
+* If a cluster is not defined
 as one cell type, then it is probably another cell type (as long as it
-also expresses certain markers) o     Eg: a cluster may be a Myeloid
-cell if it is NOT an NK, T or B cell Here is an updated tree diagram of
+also expresses certain markers) 
+  * Eg: a cluster may be a Myeloid cell if it is NOT an NK, T or B cell Here is an updated tree diagram of
 the markers (BLUE) and rules (RED) we could use to define each cell
 type. As you get more familiar with annoCyt, you will get more
 comfortable with deciding which rules are relevant to use for your data
@@ -347,7 +352,6 @@ more appropriate than others.
 
 <figure>
 <img src="images/updatedtree.png" alt="Workflow" />
-<figcaption aria-hidden="true">Workflow</figcaption>
 </figure>
 
 #### Step 4: Create Excel table or dataframes
@@ -364,24 +368,25 @@ which markers make up that cell type. Below is an example.
 
 <figure>
 <img src="images/lt.png" alt="Workflow" />
-<figcaption aria-hidden="true">Workflow</figcaption>
 </figure>
 
-Important checks: •     Your columns must be called “label”, “parent”
-and “value” •     Do NOT include any full stops or spaces in the label
-or parent column – use an underscore instead if necessary •     In the
-value column, separate your markers with a comma •     For the very
-first cell type (which is “immunecell” in the diagrams above), put
-“root” in the parent column. •     If you have markers that a cell type
-is negative for (eg NKs are CD3-), include these in “value”. Indicate
+Important checks: 
+* Your columns must be called “label”, “parent” and “value” 
+* Do NOT include any full stops or spaces in the label
+or parent column – use an underscore instead if necessary
+* In the value column, separate your markers with a comma
+* For the very first cell type (which is “immunecell” in the diagrams above), put
+“root” in the parent column.
+* If you have markers that a cell type is negative for (eg NKs are CD3-), include these in “value”. Indicate
 they are negative by writing “neg” after the marker without any spaces
-(eg CD3neg) •     If all the markers that make up a cell type are
+(eg CD3neg)
+* If all the markers that make up a cell type are
 negative markers, you can include them in your lineage table but a
 singscore value will NOT be generated for it. (You can still create
-rules for identifying these cell types by using a “not.” rule) •     The
-capitalisation/spelling/punctuation of your markers in the third column
+rules for identifying these cell types by using a “not.” rule)
+* The capitalisation/spelling/punctuation of your markers in the third column
 MUST BE THE SAME as how the markers are written in your .fcs files
-•     DO NOT use spaces in the label or parent column.
+* DO NOT use spaces in the label or parent column.
 
 ##### Rules table
 
@@ -392,45 +397,52 @@ spelling/capitalization/punctuation as the “label” column in your first
 file). The second column indicates the rule– note there is only one rule
 per row. The third column specifies the threshold (if relevant). If a
 threshold isn’t relevant, write “NA”. Here is the nomenclature rules for
-the “rule” column: •     e.greaterthan: check if expression is greater
+the “rule” column: 
+* e.greaterthan: check if expression is greater
 than a certain threshold (must specify a number in the threshold
 column). Note it is inclusive of the threshold value (i.e., greater than
-or equal to), unless the threshold is 0 or less •     e.lessthan: check
-if expression is lower than a certain threshold (must specify a number
+or equal to), unless the threshold is 0 or less
+* e.lessthan: check if expression is lower than a certain threshold (must specify a number
 in the threshold column). Not inclusive of the threshold value unless it
-is 0 or less •     NOTE ON E.GREATERTHAN AND E.LESSTHAN o     If only
+is 0 or less 
+* NOTE ON E.GREATERTHAN AND E.LESSTHAN
+  * If only
 one marker makes up a cell type, then you can just write e.greatherthan
-o     If multiple markers make up a cell type, and you want to threshold
+  * If multiple markers make up a cell type, and you want to threshold
 each marker differently, you must specify the marker before the “e.”
-part by writing eg “CD3e.greaterthan” o     If multiple markers make up
+part by writing eg “CD3e.greaterthan”
+  * If multiple markers make up
 a cell type and they all have the same threshold, you can just write
-“e.greaterthan” •     s.greaterthan: check if singscore is greater than
+“e.greaterthan”
+* s.greaterthan: check if singscore is greater than
 a certain threshold (must specify a number in the threshold column).
 Inclusive of the threshold value, unless the threshold is 0
-•     max(label1,label2) : compares the singscore of all the cell types
+* max(label1,label2) : compares the singscore of all the cell types
 listed in the brackets and checks that the desired cell type has the
-highest score out of all of them. •     not. : check if the cluster is
+highest score out of all of them.
+* not. : check if the cluster is
 not a certain cell type. The part after the full stop must be one of the
-other labels •     isct. : check if the cluster is a certain cell type.
+other labels 
+* isct. : check if the cluster is a certain cell type.
 The part after the full stop must be one of the other labels
 
 Here is an example:
 
 <figure>
 <img src="images/rt.png" alt="Workflow" />
-<figcaption aria-hidden="true">Workflow</figcaption>
 </figure>
 
 ##### When to use certain rules? Some recommendations:
 
-•     Include a max threshold when there are multiple subtypes that are
-possible •     Including a singscore threshold of at least 0 is
-recommended for most, if not all, cell types •     Including an
-expression threshold (as well as a singscore threshold) is useful to
+* Include a max threshold when there are multiple subtypes that are
+possible
+* Including a singscore threshold of at least 0 is
+recommended for most, if not all, cell types
+* Including an expression threshold (as well as a singscore threshold) is useful to
 have to add a layer of protection. Sometimes the expression threshold
 works better (or worse) than the singscore method – it ultimately
-depends on how well the markers worked. •     If there is only one
-possible label at a particular level, include a “not.” rule. This way
+depends on how well the markers worked.
+* If there is only one possible label at a particular level, include a “not.” rule. This way
 you can distinguish between clusters that actually aren’t that
 particular label, and those that are “unknown” (ie, don’t pass any
 rules). For example, when you want to find clusters which are
@@ -458,7 +470,6 @@ lineage table as such:
 
 <figure>
 <img src="images/special1.png" alt="Workflow" />
-<figcaption aria-hidden="true">Workflow</figcaption>
 </figure>
 
 By writing “special” in the parent column, it will not be a part of the
@@ -470,5 +481,4 @@ markers you used to define a cell type. Eg:
 
 <figure>
 <img src="images/special2.png" alt="Workflow" />
-<figcaption aria-hidden="true">Workflow</figcaption>
 </figure>

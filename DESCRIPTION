@@ -3,7 +3,7 @@ Type: Package
 Title: Hierarchical Annotation of High-Dimensional Cytometry Data
 Version: 0.1.0
 Authors@R: 
-    c(person("Stefanie", "Navaratnam", "snavaratnam@ccia.org.au", role = c("aut", "cre")),
+    c(person("Stefanie", "Navaratnam", email = "snavaratnam@ccia.org.au", role = c("aut", "cre")),
     person("Niko", "Thio", email = "niko.thio@petermac.org", role = "aut"))
 Description: This package provides tools to analyse high-dimensional cytometry data including clustering, annotation, differential abundance testing and visualisations. 
         For the annotation step, you provide the cell types you want to find and specify rules of how to find them, and annoCyt will do the rest. 
